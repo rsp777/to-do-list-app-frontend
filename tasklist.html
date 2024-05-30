@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Include FullCalendar CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/main.min.css"
+      rel="stylesheet"
+    />
+    <title>Task List</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e9ecef;
+        margin: 0;
+        padding: 0;
+      }
+      .header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+      .header .user-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header .user-info .username {
+        font-weight: bold;
+      }
+      .header .user-info .time {
+        font-size: 14px;
+      }
+      .task-container {
+        max-width: 800px;
+        background: #fff;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .add-task {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      .add-task input {
+        flex-grow: 1;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+      .add-task button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+      }
+      .add-task button:hover {
+        background-color: #218838;
+      }
+      .task-list {
+        list-style: none;
+        padding: 0;
+      }
+      .task-item {
+        background: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .task-item .text {
+        margin-right: auto;
+      }
+      .task-item .delete-btn {
+        background-color: #dc3545;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: white;
+        cursor: pointer;
+      }
+      .task-item .delete-btn:hover {
+        background-color: #c82333;
+      }
+      .task-item .created-time {
+        font-size: 12px;
+        color: #6c757d;
+      }
+      #calendar {
+        max-width: 2000px;
+        margin: 100px auto;
+      }
+      @media (min-width: 768px) {
+        .modal-dialog.custom-size {
+          max-width: 90%; /* Adjust the percentage as needed */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="user-info">
+        <div>ToDoApp</div>
+        <div>
+          Welcome, <span id="username1" class="username"></span> -
+          <span class="time" id="time"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="taskCalendarTabs" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          id="tasks-tab"
+          data-toggle="tab"
+          href="#tasks"
+          role="tab"
+          aria-controls="tasks"
+          aria-selected="true"
+          >Tasks</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="calendar-tab"
+          data-toggle="tab"
+          href="#calendarTab"
+          role="tab"
+          aria-controls="calendar"
+          aria-selected="false"
+          >Calendar</a
+        >
+      </li>
+      <li class="nav-item ml-auto">
+        <!-- Add ml-auto class to move the button to the right -->
+        <button class="nav-link" onclick="signout()">Logout</button>
+      </li>
+    </ul>
+    f
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Calendar Tab Content 
+  <div id="Calendar" class="tabcontent">
+    <div id="calendar"></div>
+  </div>-->
+
+    <div class="task-container">
+      <div class="add-task">
+        <input
+          id="new-task-input"
+          type="text"
+          placeholder="Enter a new task"
+          onkeypress="search(event)"
+        />
+        <form action="javascript:createTaskJson()">
+          <button id="addTaskBtn">Add Task</button>
+        </form>
+      </div>
+      <ul class="task-list"></ul>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="taskCalendarContent">
+      <!-- Tasks Tab Pane -->
+      <div
+        class="tab-pane fade show active"
+        id="tasks"
+        role="tabpanel"
+        aria-labelledby="tasks-tab"
+      >
+        <!-- Task List Content -->
+        <div
+          id="taskContent"
+          class="task-container container-fluid"
+          style="flex-grow: 1"
+        >
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">S.No.</th>
+                <th scope="col">Task Description</th>
+                <th scope="col">Completed</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Example Task Row -->
+              <!-- <tr> -->
+              <!-- <td id=""></td> -->
+              <!-- <td id=""></td> -->
+              <!-- <td>
+          <button class="btn btn-primary btn-sm">Edit</button>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        </td> -->
+              <!-- </tr> -->
+              <!-- More tasks will be added here -->
+            </tbody>
+          </table>
+          <!-- Task table or list here -->
+        </div>
+      </div>
+      <!-- Calendar Tab Pane -->
+      <div
+        class="tab-pane fade"
+        id="calendarTab"
+        role="tabpanel"
+        aria-labelledby="calendar-tab"
+      >
+        <!-- Calendar Content -->
+        <div
+          id="calendar"
+          class="calendar-container container-fluid"
+          style="padding-bottom: 20%; position: relative"
+        ></div>
+      </div>
+    </div>
+    <script src="js/tasklist.js"></script>
+    <div id="calendar"></div>
+  </body>
+</html>
