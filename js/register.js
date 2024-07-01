@@ -14,9 +14,7 @@
 
       async function register(userData) {
         const url =
-          "http://" +
-          window.location.hostname +
-          ":8082/register-service/register";
+          "https://register-service-ce5ur4umqa-uc.a.run.app/register-service/register";
         const jsonData = userData;
         console.log("user json : {}", jsonData);
         //const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYXNwYXciLCJleHAiOjE3MTY2MDM4NjEsImlhdCI6MTcxNjU1Mzg2MX0.e-raKxRebWR95nFsFvxRnYBpUPIIz_e8aj6730PgD7maReoPlHWlf_mnRtRs1uIF9u-mXiFmW-BsLfdOcI2srA';
