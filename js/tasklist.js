@@ -91,7 +91,7 @@ function createTaskJson() {
  */
 async function createTask(taskData) {
   const url =
-    "http://" + window.location.hostname + ":8084/api/tasks/create";
+    "https://to-do-service-ce5ur4umqa-uc.a.run.app/api/tasks/create";
   const jsonData = taskData;
   const authToken = jwtToken;
   try {
@@ -122,7 +122,7 @@ async function createTask(taskData) {
 }
 
 async function updateTaskStatus(taskId, taskName, completed) {
-  const url = `http://${window.location.hostname}:8084/api/tasks/update/${taskId}?taskName=${taskName}&isCompleted=${completed}`;
+  const url = `https://to-do-service-ce5ur4umqa-uc.a.run.app/api/tasks/update/${taskId}?taskName=${taskName}&isCompleted=${completed}`;
   // const jsonData = { completed };
   try {
     const response = await fetch(url, {
@@ -155,7 +155,7 @@ async function updateTaskStatus(taskId, taskName, completed) {
 }
 
 async function deleteTask(taskId) {
-  const url = `http://${window.location.hostname}:8084/api/tasks/delete/${taskId}`;
+  const url = `https://to-do-service-ce5ur4umqa-uc.a.run.app/api/tasks/delete/${taskId}`;
   var confirmDelete = confirm("Are you Sure want to delete this task ?");
   // const jsonData = { completed };
   if (confirmDelete) {
@@ -195,7 +195,7 @@ function getTasks() {
   try {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      const url = `http://${window.location.hostname}:8084/api/tasks/username/${username}`;
+      const url = `https://to-do-service-ce5ur4umqa-uc.a.run.app/api/tasks/username/${username}`;
       xhr.open("GET", url, true);
       xhr.send();
 
