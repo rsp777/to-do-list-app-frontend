@@ -11,7 +11,7 @@ function createSignInJson() {
 
   async function signin(userData) {
     const url =
-      "http://" + window.location.hostname + ":8083/login-service/signin";
+      "https://login-service-ce5ur4umqa-uc.a.run.app/login-service/signin";
     const jsonData = userData;
     //const authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYXNwYXciLCJleHAiOjE3MTY2MDM4NjEsImlhdCI6MTcxNjU1Mzg2MX0.e-raKxRebWR95nFsFvxRnYBpUPIIz_e8aj6730PgD7maReoPlHWlf_mnRtRs1uIF9u-mXiFmW-BsLfdOcI2srA';
     try {
@@ -30,7 +30,7 @@ function createSignInJson() {
         console.log("result : ", document.cookie);
         // alert('User Created Successfully');
         const taskUrl =
-          "http://" + window.location.hostname + ":8080/tasklist.html";
+          "https://rsp777.github.io/to-do-list-app-frontend/tasklist.html";
         console.log(taskUrl);
         window.location.href = taskUrl;
       } else {
