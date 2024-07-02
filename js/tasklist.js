@@ -40,7 +40,7 @@ function getUserName(jwtToken) {
 
 async function signout() {
   const url =
-    "http://" + window.location.hostname + ":8083/login-service/signout";
+    "https://login-service-ce5ur4umqa-uc.a.run.app/login-service/signout";
   const authToken = jwtToken;
   try {
     alert("Are you sure want to Sign Out ?" + username);
@@ -53,7 +53,7 @@ async function signout() {
     });
     if (response.ok) {
       const signinUrl =
-        "http://" + window.location.hostname + ":8080/login.html";
+        "https://rsp777.github.io/to-do-list-app-frontend/login.html";
       window.location.href = signinUrl;
     } else {
       console.error(
