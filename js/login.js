@@ -30,7 +30,7 @@ function createSignInJson() {
         console.log("result : ", document.cookie);
         // alert('User Created Successfully');
         const taskUrl =
-          "https://rsp777.github.io/to-do-list-app-frontend/tasklist.html";
+          "https://to-do-list-app-frontend-ce5ur4umqa-uc.a.run.app/tasklist.html";
         console.log(taskUrl);
         window.location.href = taskUrl;
       } else {

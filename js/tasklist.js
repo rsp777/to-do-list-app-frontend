@@ -53,7 +53,7 @@ async function signout() {
     });
     if (response.ok) {
       const signinUrl =
-        "https://rsp777.github.io/to-do-list-app-frontend/login.html";
+        "https://to-do-list-app-frontend-ce5ur4umqa-uc.a.run.app/login.html";
       window.location.href = signinUrl;
     } else {
       console.error(
